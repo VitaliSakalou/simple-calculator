@@ -29,6 +29,15 @@
                   array_push($mainArray,$strNumbers);
                 }
           }
+
+          if ($mainArray[0] == "-"){
+            if(sizeof($mainArray) == 2){
+              return join('',array_splice($mainArray, 0, 2, ($mainArray[0]+$mainArray[1])));
+            }
+           array_splice($mainArray, 0, 2, ($mainArray[0].$mainArray[1]));
+         }
+
+        
             
             for ($i = 1; $i <= sizeof($mainArray); $i++) {
                 if ($mainArray[$i] === "*"){
@@ -58,6 +67,8 @@
                     $i=0;
                   }
                 }
+
+                
             
             return $rez;
         }
