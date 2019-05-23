@@ -1,0 +1,14 @@
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+form {
+  width: 100%;
+}
+input {
+  border: none;
+  border-radius: 5px;
+}
+.key {
+  height: 50px;
+  width: 50px;
+}
