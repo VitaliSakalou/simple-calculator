@@ -7,8 +7,18 @@ form {
 input {
   border: none;
   border-radius: 5px;
+  text-align: right;
+  height: 70px !important;
+  font-size: 40px !important;
+}
+button {
+  border-radius: 0px !important;
+  font-size: 20px !important;
 }
 .key {
   height: 50px;
   width: 50px;
+}
+.keys {
+  border: 1px solid black;
 }
