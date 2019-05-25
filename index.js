@@ -1,14 +1,18 @@
 "use strict";
 
+const operatorArr = ["+", "-", "/", "*"];
+
 $(".key").click(function(EO) {
-  var previousValue =
+  const currentElementIsOperator = operatorArr.some(
+    item => item === $(this).val()
+  );
+  let previousValue =
     $("#inputValue").val() === "0" ? "" : $("#inputValue").val();
-  const operatorArr = ["+", "-", "/", "*"];
   const isOperation = operatorArr.some(item => item === $(this).val());
   const isLastElOperation = operatorArr.some(
     item => item === previousValue[previousValue.length - 1]
   );
-  var currentValue = null;
+  let currentValue = null;
   if (isOperation) {
     currentValue = isLastElOperation
       ? previousValue.slice(0, -1) + $(this).val()
@@ -19,13 +23,33 @@ $(".key").click(function(EO) {
   $("#inputValue").val(currentValue);
 });
 
-$("#countButton").click(function() {
-  var currentValue = $("#inputValue").val();
+function valueValidation(value) {
+  let currentValue = value;
+  const lastElementIsOperator = operatorArr.some(
+    item => item === currentValue[currentValue.length - 1]
+  );
+  const firstElementIsOperator = ["*", "/"].some(
+    item => item === currentValue[0]
+  );
+  if (lastElementIsOperator) {
+    currentValue = currentValue.slice(0, -1);
+  }
+  if (firstElementIsOperator) {
+    currentValue = currentValue.slice(1);
+  }
+  if (value.length === 1 && lastElementIsOperator) {
+    currentValue = 0;
+  }
+  return currentValue;
+}
 
+$("#countButton").click(function() {
+  let currentValue = $("#inputValue").val();
+  const finalValue = valueValidation(currentValue);
   $.ajax({
     type: "POST",
     url: "analytics.php",
-    data: { value: currentValue },
+    data: { value: finalValue },
     success: function(result) {
       $("#inputValue").val(result);
     },
@@ -38,7 +62,7 @@ $("#countButton").click(function() {
 });
 
 $("#resetButton").click(function() {
-  var currentValue = 0;
+  const currentValue = 0;
   $.ajax({
     type: "POST",
     url: "analytics.php",
