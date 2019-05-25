@@ -3,7 +3,19 @@
 $(".key").click(function(EO) {
   var previousValue =
     $("#inputValue").val() === "0" ? "" : $("#inputValue").val();
-  var currentValue = previousValue + $(this).val();
+  const operatorArr = ["+", "-", "/", "*"];
+  const isOperation = operatorArr.some(item => item === $(this).val());
+  const isLastElOperation = operatorArr.some(
+    item => item === previousValue[previousValue.length - 1]
+  );
+  var currentValue = null;
+  if (isOperation) {
+    currentValue = isLastElOperation
+      ? previousValue.slice(0, -1) + $(this).val()
+      : previousValue + $(this).val();
+  } else {
+    currentValue = previousValue + $(this).val();
+  }
   $("#inputValue").val(currentValue);
 });
 
